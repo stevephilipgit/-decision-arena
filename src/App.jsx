@@ -112,7 +112,6 @@ function LandingPage({ onEnter }) {
       {/* Hero */}
       <section style={L.hero}>
         <div style={L.heroInner}>
-          <div style={L.heroBadge}>🚀 Built with Claude AI</div>
           <h1 style={L.heroTitle}>
             Every Big Decision<br/>
             <span style={L.heroAccent}>Deserves a Devil's Advocate</span>
