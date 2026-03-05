@@ -40,19 +40,24 @@ function buildTurns() {
 }
 
 async function callClaude(system, userMsg) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
-      system,
-      messages: [{ role: "user", content: userMsg }],
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: userMsg },
+      ],
     }),
   });
-  if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || "API error"); }
+
+  if (!res.ok) {
+    const e = await res.json();
+    throw new Error(e.error?.message || "API error");
+  }
+
   const data = await res.json();
-  return data.content?.[0]?.text || "";
+  return data.choices?.[0]?.message?.content || "";
 }
 
 async function getDebaterResponse({ debater, topic, round, history }) {
